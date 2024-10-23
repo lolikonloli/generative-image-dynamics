@@ -32,7 +32,7 @@ class VQModel_(VQModel):
         return out.reshape(b, f, -1, *out.shape[-2:])  # b,f,c,h*4,w*4
 
 def get_pretrained_vae():
-    return VQModel_.from_pretrained("CompVis/ldm-celebahq-256", subfolder="vqvae")
+    return VQModel_.from_pretrained("CompVis/ldm-celebahq-256", subfolder="vqvae", cache_dir="./ckpt")
 
 def get_noise_scheduler():
     return DDPMScheduler(num_train_timesteps=1000, beta_start=0.0015, beta_end=0.0195, beta_schedule="scaled_linear")

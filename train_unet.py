@@ -14,7 +14,7 @@ if torch.cuda.is_available():
 else:
     DEVICE = torch.device("cpu")
 FFT = True
-NUM_FREQ = 16
+NUM_FREQ = 32
 SPEC_CHANNELS = 4 if FFT else 2
 FRAME_CHANNELS = 3
 _VAE_LATENT_CHANNELS = 3
@@ -94,6 +94,8 @@ def train_iteration(model, batch):
 
 @torch.no_grad()
 def test(model, test_ids=None, num_freq=16, num_steps=100, batch_size=1):
+    #return
+
     assert num_freq <= NUM_FREQ, (num_freq, NUM_FREQ)
 
     model.eval()
@@ -102,7 +104,7 @@ def test(model, test_ids=None, num_freq=16, num_steps=100, batch_size=1):
         os.makedirs(OUT_DIR)
 
     if test_ids is None:
-        test_ids = ["512px-Dandelion_picture.jpg"]
+        test_ids = ["512px-Autumn_leaf_in_the_wind_(Unsplash).jpg"]
     elif isinstance(test_ids, str):
         test_ids = [test_ids]
 
@@ -121,7 +123,7 @@ def test(model, test_ids=None, num_freq=16, num_steps=100, batch_size=1):
 if __name__ == "__main__":
     training = Training(model, optimizer, lr_scheduler=None, ckpt_path=CKPT_PATH)    
     training.run(
-        max_niters=len(train_loader) * 300,
+        max_niters=len(train_loader) * 400,
         train_loader=train_loader,
         train_iteration=train_iteration,
         test=test,
